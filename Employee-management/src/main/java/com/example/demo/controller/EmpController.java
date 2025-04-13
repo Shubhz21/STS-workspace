@@ -64,7 +64,7 @@ public class EmpController {
     public String showEditForm(@PathVariable("id") int id, Model model) {
         Employee emp = employeeService.getEmployeeById(id);  // you'll create this in the service layer
         model.addAttribute("employee", emp);
-        return "editEmployee";  // a new Thymeleaf template for editing
+        return "editEmployee";  
     }
     
     
