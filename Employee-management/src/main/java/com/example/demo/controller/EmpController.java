@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.*;
 import com.example.demo.entity.Employee;
 import com.example.demo.service.EmpService;
 
+import jakarta.servlet.http.HttpSession;
+
 import java.util.List;
 
 @Controller
@@ -62,7 +64,7 @@ public class EmpController {
     
     @GetMapping("/edit/{id}")
     public String showEditForm(@PathVariable("id") int id, Model model) {
-        Employee emp = employeeService.getEmployeeById(id);  // you'll create this in the service layer
+        Employee emp = employeeService.getEmployeeById(id);  
         model.addAttribute("employee", emp);
         return "editEmployee";  
     }
@@ -73,6 +75,9 @@ public class EmpController {
         employeeService.updateEmployee(emp);
         return "redirect:/employees";
     }
+    
+   
+
     
     
     

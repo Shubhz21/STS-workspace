@@ -16,8 +16,11 @@ import lombok.Data;
 public class Employee {
 	
 	@Id
+	
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "emp_seq")
+	
     @SequenceGenerator(name = "emp_seq", sequenceName = "emplsequence", allocationSize = 1)
+	
 	private int id;
 
     @Column(name = "name")
