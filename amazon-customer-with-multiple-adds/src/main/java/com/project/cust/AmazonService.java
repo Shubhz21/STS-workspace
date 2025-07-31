@@ -1,10 +1,13 @@
 package com.project.cust;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.hibernate.query.Query;
 
 import com.project.cust.entities.Address;
 import com.project.cust.entities.Customer;
@@ -14,7 +17,7 @@ import com.project.cust.util.HibernateUtil;
 public class AmazonService {
 	
 	
-	public void addNewAddress(long customerId ) {
+	public void addNewAddress(long customerId) {
 	
 	
     
@@ -53,20 +56,28 @@ public class AmazonService {
     		return;
     	}
     	
+Scanner s = new Scanner(System.in);
+		
+		System.out.println("enter addresses of customer: address,pincode:  \n");
+		
+	
+	       String address = s.next();
+	       String pincode = s.next();
+	       
     	
     
         ssn.createNativeQuery("INSERT INTO address (address, pincode, customerId) VALUES (:addr, :pin, :cid)")
-               .setParameter("addr", "Bangalore city, sector-3")
-               .setParameter("pin", "8246")
+               .setParameter("addr", address)
+               .setParameter("pin", pincode)
                .setParameter("cid", customerId)
                .executeUpdate();
 
        
-        ssn.createNativeQuery("INSERT INTO address (address, pincode, customerId) VALUES (:addr, :pin, :cid)")
-               .setParameter("addr", "Mumbai, CSMT")
-               .setParameter("pin", "82467")
-               .setParameter("cid", customerId)
-               .executeUpdate();
+//        ssn.createNativeQuery("INSERT INTO address (address, pincode, customerId) VALUES (:addr, :pin, :cid)")
+//               .setParameter("addr", "Dubai, UAE")
+//               .setParameter("pin", "5252")
+//               .setParameter("cid", customerId)
+//               .executeUpdate();
     	
     
     
@@ -85,7 +96,7 @@ public class AmazonService {
     
     transaction.commit();
     
-    System.out.println("Address updated..");
+    System.out.println("Address updated assigned..");
     
     }catch (Exception e) {
  	   
@@ -105,14 +116,14 @@ public class AmazonService {
 	}
 	
 	
-	public void saveCustomer( ) {
+	public void addNewCustomer( ) {
 		
 		
 		Customer customer = new Customer();
 		
 		Scanner s = new Scanner(System.in);
 		
-		System.out.println("enter all details of customer: name,mail,phone. ");
+		System.out.println("enter all details of customer: name,mail,phone. \n");
 		
 	
 	       String name = s.next();
@@ -125,6 +136,7 @@ public class AmazonService {
 		try(Session session = sessionFactory.openSession()) {
 			
 			Transaction beginTransaction = session.beginTransaction();
+			
 			
 			customer.setCustomerName(name);
 			customer.seteMail(mail);
@@ -143,8 +155,143 @@ public class AmazonService {
 			e.printStackTrace();
 		
 		}
+	}
+	
+	
+	public void getAllCustomers()  {
 		
+		Transaction transaction = null;
+		
+		SessionFactory sessionFactory = HibernateUtil.getsessionFactory();
+		
+		try(Session ssn = sessionFactory.openSession()) {
+			
+			transaction = ssn.beginTransaction();
+			
+			List<Customer> c = ssn.createNativeQuery("select * from customer",Customer.class).getResultList();
+			
+			transaction.commit();
+			
+			for(Customer cust : c) {
+				
+				System.out.println(cust.getCustomerId()+" | "+cust.getCustomerName()+" | "+cust.getPhone()+" | "+cust.geteMail()+" | ");
+				
+			}
+			
+			Thread t = new Thread();
+			
+			t.sleep(3000);
+			
+		}catch (Exception e) {
+			
+			if(transaction!= null) {
+				
+				transaction.rollback();
+			}
+			else {
+				e.printStackTrace();
+			}
+		}
+		
+		
+		
+		
+	}
+	
+	public void deleteCustomer(long customerId) {
+		
+        Transaction transaction = null;
+		
+		SessionFactory sessionFactory = HibernateUtil.getsessionFactory();
+		
+		try (Session ssn = sessionFactory.openSession()){
+			
+			transaction = ssn.beginTransaction();
+			
+			Query addQry = ssn.createNativeQuery("delete from address where customerId = :custId");
+			addQry.setParameter("custId", customerId);
+			
+			int affctdRows = addQry.executeUpdate();
+			
+			Query custQry = ssn.createNativeQuery("delete from customer where customerId = :id");
+			
+			custQry.setParameter("id", customerId);
+			
+			int totalRowsAffected = custQry.executeUpdate();
+			
+			System.out.println("Total customers and associated addresses deleted: customers: "+totalRowsAffected+" addresses: "+affctdRows+"\n\n");
+			
+			List<Customer> cust = ssn.createNativeQuery("select * from customer",Customer.class).getResultList();
+			
+			for(Customer customers : cust) {
+				
+				System.out.println(customers.getCustomerId()+" | "+customers.getCustomerName()+" | "+customers.getPhone()+" | "+customers.geteMail()+" | ");
 
+			}
+			
+			transaction.commit();
+			
+			Thread t = new Thread();
+			
+			t.sleep(3000);
+			
+			
+		}catch (Exception e) {
+			
+			if(transaction != null) {
+				transaction.rollback();
+			}
+			else {
+				e.printStackTrace();
+			}
+			
+			
+		}
+	}
+	
+	public void updateCustomer(long customerId) {
+		
+		SessionFactory sessionFactory = HibernateUtil.getsessionFactory();
+		
+		Transaction transaction = null;
+		
+		try (Session ssn = sessionFactory.openSession()){
+			
+			transaction = ssn.beginTransaction();
+			
+			//Customer cust = ssn.get(Customer.class, customerId);
+			
+			Scanner s = new Scanner(System.in);
+			
+			System.out.println("please enter values: \n");
+			
+			String name = s.nextLine();
+			String eml = s.nextLine();
+			
+			
+			
+			Query qry = ssn.createNativeQuery("update customer set customerName = :custName , eMail = :email where customerId = :custId");
+					qry.setParameter("custName", name);
+					qry.setParameter("email", eml);
+					qry.setParameter("custId", customerId);
+					
+                    int afftdRows = qry.executeUpdate();
+					
+					System.out.println("total customers updated: "+afftdRows);
+					
+					transaction.commit();
+			
+		}catch (Exception e) {
+			
+			if(transaction!=null) {
+				transaction.rollback();
+			}else {
+				e.printStackTrace();
+			}
+			
+			
+			
+		}
 		
 	}
 

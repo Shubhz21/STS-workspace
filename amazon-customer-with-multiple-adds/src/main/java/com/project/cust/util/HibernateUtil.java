@@ -11,11 +11,12 @@ public class HibernateUtil {
 	private static SessionFactory sessionFactory;
 	
 	static {
+		
 		try {
 			
 			if(sessionFactory==null) {
 				
-			sessionFactory =	new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Customer.class).addAnnotatedClass(Address.class).buildSessionFactory();
+			sessionFactory = new Configuration().configure("hibernate.cfg.xml").addAnnotatedClass(Customer.class).addAnnotatedClass(Address.class).buildSessionFactory();
 				
 			}
 			
