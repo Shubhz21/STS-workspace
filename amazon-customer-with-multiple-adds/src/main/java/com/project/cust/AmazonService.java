@@ -16,12 +16,16 @@ import com.project.cust.util.HibernateUtil;
 
 public class AmazonService {
 	
+	static Transaction transaction = null;
+	
+	static SessionFactory sessionFactory = HibernateUtil.getsessionFactory();
+	
 	
 	public void addNewAddress(long customerId) {
 	
 	
     
-    Transaction transaction = null;
+    
     
     
     
@@ -96,7 +100,7 @@ Scanner s = new Scanner(System.in);
     
     transaction.commit();
     
-    System.out.println("Address updated assigned..");
+    System.out.println("Address updated and assigned..");
     
     }catch (Exception e) {
  	   
@@ -130,7 +134,7 @@ Scanner s = new Scanner(System.in);
 	       String mail = s.next();
 	       String  phone = s.next();
 	       
-	       SessionFactory sessionFactory = HibernateUtil.getsessionFactory();
+	       
 	       
 		
 		try(Session session = sessionFactory.openSession()) {
@@ -160,9 +164,9 @@ Scanner s = new Scanner(System.in);
 	
 	public void getAllCustomers()  {
 		
-		Transaction transaction = null;
 		
-		SessionFactory sessionFactory = HibernateUtil.getsessionFactory();
+		
+		
 		
 		try(Session ssn = sessionFactory.openSession()) {
 			
@@ -170,13 +174,15 @@ Scanner s = new Scanner(System.in);
 			
 			List<Customer> c = ssn.createNativeQuery("select * from customer",Customer.class).getResultList();
 			
-			transaction.commit();
+			
 			
 			for(Customer cust : c) {
 				
 				System.out.println(cust.getCustomerId()+" | "+cust.getCustomerName()+" | "+cust.getPhone()+" | "+cust.geteMail()+" | ");
 				
 			}
+			
+			transaction.commit();
 			
 			Thread t = new Thread();
 			
@@ -200,9 +206,9 @@ Scanner s = new Scanner(System.in);
 	
 	public void deleteCustomer(long customerId) {
 		
-        Transaction transaction = null;
+        
 		
-		SessionFactory sessionFactory = HibernateUtil.getsessionFactory();
+		
 		
 		try (Session ssn = sessionFactory.openSession()){
 			
@@ -251,9 +257,9 @@ Scanner s = new Scanner(System.in);
 	
 	public void updateCustomer(long customerId) {
 		
-		SessionFactory sessionFactory = HibernateUtil.getsessionFactory();
 		
-		Transaction transaction = null;
+		
+		
 		
 		try (Session ssn = sessionFactory.openSession()){
 			
@@ -263,7 +269,7 @@ Scanner s = new Scanner(System.in);
 			
 			Scanner s = new Scanner(System.in);
 			
-			System.out.println("please enter values: \n");
+			System.out.println("please enter values name and email: \n");
 			
 			String name = s.nextLine();
 			String eml = s.nextLine();
@@ -294,5 +300,92 @@ Scanner s = new Scanner(System.in);
 		}
 		
 	}
+	
+	public void getCustById(long customerId) {
+		
+		try (Session ssn = sessionFactory.openSession()){
+			
+			transaction=ssn.beginTransaction();
+			
+             Customer c = (Customer) ssn.createNativeQuery("select * from customer where customerId = :custId",Customer.class)
+            		 .setParameter("custId", customerId)
+            		 .getSingleResult();
+			
+			
+			
+			
+				
+				System.out.println(c.getCustomerId()+" | "+c.getCustomerName()+" | "+c.getPhone()+" | "+c.geteMail()+" | ");
+				
+			
+			
+			
+			
+			transaction.commit();
+			
+			
+			
+			
+			
+			
+			
+		}catch (Exception e) {
+			
+			if(transaction!=null) {
+				transaction.rollback();
+			}else {
+				e.printStackTrace();
+			}
+		}
+		
+		
+		
+	}
+	
+	
+	
+	// sample methods for checking HQL----->
+	
+	public void getAll() {
+		
+		Session ssn = sessionFactory.openSession();
+		
+		
+		String hql = "from Customer where customerId=2";
+		
+		Query<Customer> qry = ssn.createQuery(hql); 
+		
+		Customer cust = qry.getSingleResult();
+		
+		//for(Customer customer : cust) {
+			
+			System.out.println(cust.getCustomerId()+" | "+cust.getCustomerName()+" | "+cust.getPhone()+" | "+cust.geteMail()+" | ");
+			
+		//}
+		
+	}
+	
+	public void updateSingleData() {
+		
+		Session ssn = sessionFactory.openSession();
+		
+		transaction = ssn.beginTransaction();
+		
+		
+		
+		String hql = "update Customer set customerName= 'shubham_phunde' where customerId = 2 ";
+		
+		Query<Customer> c = ssn.createQuery(hql);
+		
+		int  effect = c.executeUpdate();
+		
+		
+		
+		transaction.commit();
+		
+		System.out.println("affected rows: "+effect);
+		
+	}
+	
 
 }

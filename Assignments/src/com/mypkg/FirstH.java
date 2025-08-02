@@ -101,10 +101,10 @@ int [] arr= {10,02,20,40,30};
 		
 		FirstH obj = new FirstH();
 		
-		obj.pttrn();
-		obj.firstH();
+		//obj.pttrn();
+		//obj.firstH();
 		obj.secondH();
-		obj.thirdH();
+		//obj.thirdH();
 		
 		
 		
