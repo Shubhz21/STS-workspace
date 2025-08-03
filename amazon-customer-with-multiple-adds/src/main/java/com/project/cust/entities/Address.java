@@ -45,6 +45,17 @@ public class Address {
 	}
 	
 	
+	public Long getCustomerId() {
+		return customerId;
+	}
+
+	public void setCustomerId(Long customerId) {
+		this.customerId = customerId;
+	}
+
+
+	private Long customerId;
+	
 //	@ManyToOne
 //	@JoinColumn(name="customerId")
 //	private Customer customer;

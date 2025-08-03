@@ -22,28 +22,15 @@ public class AmazonService {
 	
 	
 	public void addNewAddress(long customerId) {
-	
-	
     
     
     
     
     
     
-//    Address a1 = new Address();
-//    Address a2 = new Address();
-//    
-//    a1.setAddress(" Bangalore city, secto-3");
-//    a1.setPincode("8246");
-//    
-//    a2.setAddress("Mumbai, csmt ");
-//    a2.setPincode("82467");
-//    
+  //  SessionFactory sessionFactory = HibernateUtil.getsessionFactory();
     
-    
-    SessionFactory sessionFactory = HibernateUtil.getsessionFactory();
-    
-   // Session ssn = sessionFactory.openSession();
+   
     
     try (Session ssn = sessionFactory.openSession()){
     	
@@ -100,7 +87,7 @@ Scanner s = new Scanner(System.in);
     
     transaction.commit();
     
-    System.out.println("Address updated and assigned..");
+    System.out.println("Address updated and assigned to customerId: "+customerId);
     
     }catch (Exception e) {
  	   
@@ -339,6 +326,39 @@ Scanner s = new Scanner(System.in);
 		}
 		
 		
+		
+	}
+	
+	
+	public void getAllAddressesByCustId(long customerId) {
+		
+		SessionFactory ssnFctry = HibernateUtil.getsessionFactory();
+		
+		try (Session ssn = ssnFctry.openSession()){
+			
+			transaction = ssn.beginTransaction();
+			
+			List<Address> qry = ssn.createNativeQuery("select * from address where customerId = :custId",Address.class)
+					.setParameter("custId",customerId)
+					.getResultList();
+			
+			
+			for(Address ads : qry) {
+				System.out.println(ads.getAddressId()+" | "+ads.getAddress()+" | "+ads.getCustomerId()+" | "+ads.getPincode());
+			}
+			
+			transaction.commit();
+			
+		}catch (Exception e) {
+			
+			if(transaction!=null){
+				transaction.rollback();
+			}
+			else {
+				e.printStackTrace();
+			}
+		}
+		 
 		
 	}
 	
