@@ -31,7 +31,18 @@ public class Address {
 		this.pincode = pincode;
 	}
 
+	public long getCustomerId() {
+		return customerId;
+	}
+
+	public void setCustomerId(long customerId) {
+		this.customerId = customerId;
+	}
+
 	private String pincode;
+	
+	
+	private long customerId;
 	
 	
 	

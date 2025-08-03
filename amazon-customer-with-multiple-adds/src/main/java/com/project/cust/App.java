@@ -17,7 +17,7 @@ public class App
 	
 	private AmazonService amazonService;
 	
-    public static void main(String[] args )
+    public static void main(String[] args)
     {
         System.out.println( "Project is running.." );
         
@@ -34,6 +34,7 @@ public class App
         boolean val=true;
         
         while(val) {
+        	
         	System.out.println("\nselect opearation:\n 1 - add new customer \n 2 - add new address to existing customers: \n 3 - for fetch all customers \n 4 - for delete customers: \n 5 - for update customer data: \n 6 - for fetch perticular customer: \n 7 - for fetch perticular customer addresses: \n 0 - for Exit.. \n ");
         	
         	Scanner s = new Scanner(System.in);
@@ -89,8 +90,6 @@ public class App
         	val=false;
         	
         	System.out.println("shutdown..");
-        	
-        	
         	
         	break;
 		
