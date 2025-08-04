@@ -15,29 +15,49 @@ public class Address {
 	
 	private long addressId; 
 	
+
+	private String addr;
+	
+
 	public long getAddressId() {
 		return addressId;
 	}
+
 
 	public void setAddressId(long addressId) {
 		this.addressId = addressId;
 	}
 
+
+	public String getAddr() {
+		return addr;
+	}
+
+
+	public void setAddr(String addr) {
+		this.addr = addr;
+	}
+
+
 	public String getPincode() {
 		return pincode;
 	}
+
 
 	public void setPincode(String pincode) {
 		this.pincode = pincode;
 	}
 
+
 	public long getCustomerId() {
 		return customerId;
 	}
 
+
 	public void setCustomerId(long customerId) {
 		this.customerId = customerId;
 	}
+
 
 	private String pincode;
 	
