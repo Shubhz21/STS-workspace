@@ -5,15 +5,17 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "employee")
 public class Employee {
 
 	@Id
 	
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	
-	@SequenceGenerator(name = "em_seq", sequenceName = "esequence", allocationSize = 1)
+	
 	
 	private long id;
 	

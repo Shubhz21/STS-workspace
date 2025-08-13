@@ -12,6 +12,7 @@ import com.amazon.project.entity.Address;
 @Repository
 public interface AddressRepo extends JpaRepository<Address, Long>{
 	
+	
 	@Query(value= "select * from address  where customer_id = :custId",nativeQuery = true)
 	List<Address> findByCustId(@Param("custId") long customerId);
 	

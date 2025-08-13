@@ -21,7 +21,7 @@ import com.example.demo.repository.DepartmentRepository;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*" )   //CORS POLICY
 @RestController
-@RequestMapping(path= "/api/v2/department")
+@RequestMapping(path= "/departments")
 public class DepartmentController
 {
     @Autowired

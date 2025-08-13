@@ -162,6 +162,7 @@ Scanner s = new Scanner(System.in);
 			List<Customer> c = ssn.createNativeQuery("select * from customer",Customer.class).getResultList();
 			
 			
+			System.out.println(" Id  |  customerName  |  phone  |  mail  |");
 			
 			for(Customer cust : c) {
 				
@@ -180,6 +181,7 @@ Scanner s = new Scanner(System.in);
 			if(transaction!= null) {
 				
 				transaction.rollback();
+				
 			}
 			else {
 				e.printStackTrace();
@@ -319,7 +321,9 @@ Scanner s = new Scanner(System.in);
 		}catch (Exception e) {
 			
 			if(transaction!=null) {
+				
 				transaction.rollback();
+				
 			}else {
 				e.printStackTrace();
 			}
@@ -406,6 +410,8 @@ Scanner s = new Scanner(System.in);
 		System.out.println("affected rows: "+effect);
 		
 	}
+	
+	
 	
 
 }

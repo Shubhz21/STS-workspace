@@ -13,7 +13,8 @@ import jakarta.persistence.Table;
 public class Customer {
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy =GenerationType.IDENTITY)
+	
 	private long customerId;
 	
 	public long getCustomerId() {
