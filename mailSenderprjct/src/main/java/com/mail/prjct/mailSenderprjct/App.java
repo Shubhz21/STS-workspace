@@ -20,14 +20,16 @@ import jakarta.mail.internet.MimeMessage;
 public class App 
 {
     public static void main( String[] args )
+    
     {
     	
 final String from = "fundeshubham@gmail.com";
 		
-		final String password = "aeih dmyd dhli tmnd";
+final String password = "aeih dmyd dhli tmnd";
 		
 		
-		String to = "shubhamph195@gmail.com";
+		String to = "salvepriya0810@gmail.com";
+		//  String to ="shubhamfunde2222@gmail.com";
 		
 		Properties prop = new Properties();
 		
@@ -51,10 +53,15 @@ final String from = "fundeshubham@gmail.com";
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(from));
             message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(to));
-            message.setSubject("Rssofttech");
-            message.setText("Hello! this is shubham phunde..\n"
-            		+ "All Faculties are here by informed that we have launched our new application \n"
-            		+ "");
+            message.setSubject("Test mail of java Mail_Sender_Application...About Class Attendence");
+            message.setText("Hello, Ms.Priya salve\n\n"
+            		+ "As per the guideines and rules you are informed that to attend the classes on time \n"
+            		+ "as per schedule..\n"
+            		+ "its has been seen that your attendence score is very less and its below the average\n"
+            		+ "kindly take a note of that , otherwise strict action will be taken.\n"
+            		+ "Regards,\n\n"
+            		+ "Head Department\n"
+            		+ "(Bhelwandi, Shrigonda)");
 
            
             Transport.send(message);

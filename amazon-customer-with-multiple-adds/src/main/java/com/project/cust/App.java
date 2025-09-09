@@ -80,10 +80,12 @@ public class App
 		
         case 7: System.out.println("enter customerId that you want to fetch their addresses: \n ");
 		
-		id=s.nextInt();
+		id = s.nextInt();
 		aService.getAllAddressesByCustId(id);
 		
 		break;
+		
+        case 8: System.out.println("enter the operation");
 		
         case 0:
         	
