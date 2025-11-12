@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header>
+    <h1>Admin Dashboard</h1>
+    <nav>
+        <a href="/admin/upload-exam">Upload New Exam</a>
+        <a href="/logout">Logout</a>
+    </nav>
+</header>
+
+<section>
+    <h2>All Exams</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Exam Title</th>
+                <th>Subject</th>
+                <th>Duration</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="exam : ${exams}">
+                <td th:text="${exam.title}"></td>
+                <td th:text="${exam.subject}"></td>
+                <td th:text="${exam.duration}"></td>
+                <td><a th:href="@{'/admin/delete/' + ${exam.id}}" class="delete-btn">Delete</a></td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+</body>
+</html>

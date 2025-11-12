@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" version="4.0">
+  <display-name>mcq-test-module</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>index.xhtml</welcome-file>
+    <welcome-file>default.html</welcome-file>
+    <welcome-file>default.htm</welcome-file>
+    <welcome-file>default.jsp</welcome-file>
+    <welcome-file>default.xhtml</welcome-file>
+  </welcome-file-list>
+  
+  
+  
+      <welcome-file-list>
+        <welcome-file>jsp/login.jsp</welcome-file>
+    </welcome-file-list>
+
+    <!-- Login Servlet -->
+    <servlet>
+        <servlet-name>LoginServlet</servlet-name>
+        <servlet-class>com.institute.mcq.servlet.LoginServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LoginServlet</servlet-name>
+        <url-pattern>/login</url-pattern>
+    </servlet-mapping>
+
+    <!-- Save Answer Servlet -->
+    <servlet>
+        <servlet-name>SaveAnswerServlet</servlet-name>
+        <servlet-class>com.institute.mcq.servlet.SaveAnswerServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SaveAnswerServlet</servlet-name>
+        <url-pattern>/saveAnswer</url-pattern>
+    </servlet-mapping>
+
+    <!-- Start Exam Servlet -->
+    <servlet>
+        <servlet-name>StartExamServlet</servlet-name>
+        <servlet-class>com.institute.mcq.servlet.StartExamServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>StartExamServlet</servlet-name>
+        <url-pattern>/startExam</url-pattern>
+    </servlet-mapping>
+
+    <!-- Submit Servlet -->
+    <servlet>
+        <servlet-name>SubmitServlet</servlet-name>
+        <servlet-class>com.institute.mcq.servlet.SubmitServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SubmitServlet</servlet-name>
+        <url-pattern>/finalSubmit</url-pattern>
+    </servlet-mapping>
+    
+    
+        <servlet>
+        <servlet-name>SampleS</servlet-name>
+        <servlet-class>com.institute.mcq.servlet.SampleS</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>SampleS</servlet-name>
+        <url-pattern>/sample</url-pattern>
+    </servlet-mapping>
+  
+  
+  
+</web-app>

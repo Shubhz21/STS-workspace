@@ -47,6 +47,7 @@ public class CustomerController {
 	
 	@RequestMapping(path = "/getAddsOfCust/{customerId}",method = RequestMethod.GET)
 	public List<Address> getAllAddrByCustId(@PathVariable long customerId){
+		
 		return addService.getAddofCust(customerId);
 	}
 	
@@ -70,7 +71,6 @@ public class CustomerController {
 	public ResponseEntity<String> deletePerticularAdd(@PathVariable long customerId, @PathVariable long addressId){
 		
 		 addService.deleteAddofCust(customerId, addressId);
-		 
 		 return ResponseEntity.status(HttpStatus.OK).body("Address deleted successfully addressId:"+addressId);
 	}
 	

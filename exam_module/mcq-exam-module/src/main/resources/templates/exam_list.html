@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Available Exams</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header>
+    <h1>Available Exams</h1>
+    <nav>
+        <a href="/exam/results">View Results</a>
+        <a href="/logout">Logout</a>
+    </nav>
+</header>
+
+<section>
+    <table>
+        <thead>
+            <tr>
+                <th>Exam Title</th>
+                <th>Description</th>
+                <th>Duration</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="exam : ${exams}">
+                <td th:text="${exam.title}"></td>
+                <td th:text="${exam.description}"></td>
+                <td th:text="${exam.duration}"></td>
+                <td><a th:href="@{'/exam/take/' + ${exam.id}}" class="start-btn">Start Exam</a></td>
+            </tr>
+        </tbody>
+    </table>
+</section>
+</body>
+</html>

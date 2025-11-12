@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Take Exam</title>
+</head>
+<body>
+<h2 th:text="${exam.title}"></h2>
+
+<form action="/exam/submit" method="post">
+    <input type="hidden" name="examId" th:value="${exam.id}">
+
+    <div th:each="q, i : ${questions}">
+        <!-- Each question sends one questionId and one selectedOption -->
+        <input type="hidden" name="questionId" th:value="${q.id}">
+
+        <h3 th:text="'Q' + ${i.index + 1} + '. ' + ${q.text}"></h3>
+
+        <ul>
+            <li th:each="opt : ${q.options}">
+                <label>
+                    <input type="radio"
+                           th:name="${'selectedOption_' + q.id}"
+                           th:value="${opt.optionText}" required>
+                    <span th:text="${opt.optionText}"></span>
+                </label>
+            </li>
+        </ul>
+        <hr>
+    </div>
+
+    <button type="submit">Submit Exam</button>
+</form>
+
+<script>
+    // Before submit, collect selected answers into flat fields Spring can bind
+    document.querySelector("form").addEventListener("submit", function (e) {
+        const selectedInputs = document.querySelectorAll("input[type='radio']:checked");
+        selectedInputs.forEach((input) => {
+            const hidden = document.createElement("input");
+            hidden.type = "hidden";
+            hidden.name = "selectedOption";
+            hidden.value = input.value;
+            e.target.appendChild(hidden);
+        });
+    });
+</script>
+
+</body>
+</html>

@@ -28,7 +28,7 @@ final String from = "fundeshubham@gmail.com";
 final String password = "aeih dmyd dhli tmnd";
 		
 		
-		String to = "salvepriya0810@gmail.com";
+		String to = "shubhamph195@gmail.com";
 		//  String to ="shubhamfunde2222@gmail.com";
 		
 		Properties prop = new Properties();

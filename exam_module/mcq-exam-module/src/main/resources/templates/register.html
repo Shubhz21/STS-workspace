@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register | Online Exam</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<div class="form-container">
+    <h2>Register</h2>
+
+    <form action="/register" method="post">
+        <label>Full Name:</label>
+        <input type="text" name="fullName" required>
+
+        <label>Username:</label>
+        <input type="text" name="username" required>
+        
+
+        <label>Password:</label>
+        <input type="password" name="password" required>
+        
+        <label>Email:</label>
+        <input type="email" name="email" required>
+
+        <label>Role:</label>
+        <select name="role">
+            <option value="STUDENT">Student</option>
+            <option value="ADMIN">Admin</option>
+        </select>
+
+        <button type="submit">Register</button>
+    </form>
+
+    <div class="error" th:text="${error}"></div>
+    <div class="success" th:text="${success}"></div>
+</div>
+</body>
+</html>

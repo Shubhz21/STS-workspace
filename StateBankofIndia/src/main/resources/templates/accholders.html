@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Account Holders</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; text-align: center; padding: 20px; }
+        .container { width: 80%; background: white; padding: 20px; border-radius: 10px; box-shadow: 0px 0px 10px 0px gray; margin: auto; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 10px; border: 1px solid #ddd; text-align: center; }
+        th { background-color: blue; color: white; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+        .btn { padding: 5px 10px; text-decoration: none; color: white; border-radius: 5px; border: none; cursor: pointer; }
+        .edit { background-color: green; }
+        .delete { background-color: red; }
+        .logout { background-color: grey; }
+    </style>
+</head>
+<body>
+
+<h2>Bank Customers</h2>
+
+<table border="1">
+    <tr>
+        <th>AccNo</th><th>AccHolderName</th><th>AccBalance</th><th>AccType</th><th>BranchName</th>
+    </tr>
+    <tr th:each="cust : ${customers}">
+        <td th:text="${cust.accountNo}"></td>
+        <td th:text="${cust.accHolderName}"></td>
+        <td><a th:href="@{/balance/{id}(id=${cust.accNo})}">Check Balance</a></td>
+        <td th:text="${cust.accType}"></td>
+        <td th:text="${cust.branchName}"></td>
+    </tr>
+</table>
+
+<br/>
+<a href="/add" class="btn edit">Add New Customer</a>
+
+</body>
+</html>
