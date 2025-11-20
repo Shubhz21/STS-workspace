@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Upload Exam</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <script>
+        function addQuestion() {
+            const container = document.getElementById('questions');
+            const questionIndex = container.children.length;
+            const div = document.createElement('div');
+            div.innerHTML = `
+                <h3>Question ${questionIndex + 1}</h3>
+                <label>Question Text:</label>
+                <input type="text" name="questions[${questionIndex}].text" required><br>
+                <label>Options:</label><br>
+                <input type="text" name="questions[${questionIndex}].options[0]" placeholder="Option 1" required><br>
+                <input type="text" name="questions[${questionIndex}].options[1]" placeholder="Option 2" required><br>
+                <input type="text" name="questions[${questionIndex}].options[2]" placeholder="Option 3" required><br>
+                <input type="text" name="questions[${questionIndex}].options[3]" placeholder="Option 4" required><br>
+                <label>Correct Option:</label>
+                <input type="text" name="questions[${questionIndex}].correctOption" required><br>
+                <hr>
+            `;
+            container.appendChild(div);
+        }
+    </script>
+</head>
+<body>
+<h2>Upload New Exam</h2>
+
+<form action="/admin/upload-exam" method="post">
+    <label>Exam Title:</label>
+    <input type="text" name="title" required><br>
+
+    <label>Subject:</label>
+    <input type="text" name="subject" required><br>
+
+    <label>Duration (minutes):</label>
+    <input type="number" name="duration" required><br>
+
+    <div id="questions"></div>
+    <button type="button" onclick="addQuestion()">Add Question</button>
+    <button type="submit">Submit Exam</button>
+</form>
+</body>
+</html>

@@ -1,0 +1,126 @@
+/* ===== Reset & Base Styles ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+body {
+  background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+  color: #222;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ===== Header ===== */
+header {
+  background: #1565c0;
+  color: white;
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+header h1 {
+  font-size: 1.8rem;
+  letter-spacing: 1px;
+}
+
+/* ===== Navigation ===== */
+nav a {
+  text-decoration: none;
+  color: white;
+  font-weight: 500;
+  margin-left: 25px;
+  transition: 0.3s;
+  padding: 8px 16px;
+  border-radius: 8px;
+}
+
+nav a:hover {
+  background: white;
+  color: #1565c0;
+  box-shadow: 0 3px 10px rgba(255, 255, 255, 0.4);
+}
+
+/* ===== Main Content ===== */
+.content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 80px 20px;
+}
+
+.content h2 {
+  font-size: 2.2rem;
+  color: #0d47a1;
+  margin-bottom: 20px;
+  animation: fadeInDown 1s ease;
+}
+
+.content p {
+  font-size: 1.2rem;
+  color: #333;
+  max-width: 600px;
+  line-height: 1.6;
+  animation: fadeInUp 1s ease;
+}
+
+/* ===== Animations ===== */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ===== Responsive Design ===== */
+@media (max-width: 768px) {
+  header {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  nav {
+    margin-top: 15px;
+  }
+
+  .content h2 {
+    font-size: 1.8rem;
+  }
+
+  .content p {
+    font-size: 1rem;
+  }
+}
+
+/* ===== Footer (Optional) ===== */
+footer {
+  background: #0d47a1;
+  color: white;
+  text-align: center;
+  padding: 12px;
+  font-size: 0.9rem;
+}
