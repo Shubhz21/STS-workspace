@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <title>Admin Dashboard</title>
     <link rel="stylesheet" href="/style.css">
+    <style>
+    table{ 
+    text-align: center; 
+    
+    }
+    </style>
 </head>
 <body>
 <header>
@@ -19,14 +25,14 @@
     <table>
         <thead>
             <tr>
-                <th>Exam Title</th>
-                <th>Subject</th>
-                <th>Duration</th>
+                <th>Exam_Title&nbsp;</th>
+                <th>Subject&nbsp;</th>
+                <th>Duration(mins)&nbsp;</th>
                 <th>Action</th>
             </tr>
         </thead>
         <tbody>
-            <tr th:each="exam : ${exams}">
+            <tr th:each="exam : ${exams}">&nbsp;
                 <td th:text="${exam.title}"></td>
                 <td th:text="${exam.subject}"></td>
                 <td th:text="${exam.duration}"></td>

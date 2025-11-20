@@ -37,7 +37,7 @@ public class AdminController {
         // ✅ create Exam using existing fields
         Exam exam = new Exam();
         exam.setTitle(dto.getTitle());
-        exam.setSubject(dto.getDescription());     // description → subject
+        exam.setSubject(dto.getSubject());     // description → subject
         exam.setDuration(dto.getDuration()); // duration
         exam.setTotalMarks(100); // set default marks or calculate later
 

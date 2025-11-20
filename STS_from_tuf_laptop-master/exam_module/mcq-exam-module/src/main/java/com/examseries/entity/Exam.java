@@ -16,15 +16,7 @@ public class Exam {
 
     private String subject;
     
-    private String description;
 
-    public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
 	private int totalMarks;
 
     private int duration; // e.g., 60 minutes
@@ -38,11 +30,11 @@ public class Exam {
         this.createdAt = LocalDateTime.now();
     }
 
-    public Exam(String title, String subject, int duration,String description) {
+    public Exam(String title, String subject, int duration) {
         this.title = title;
         this.subject = subject;
         this.duration = duration;
-        this.description=description;
+
         this.totalMarks = 100;
         this.createdAt = LocalDateTime.now();
     }
