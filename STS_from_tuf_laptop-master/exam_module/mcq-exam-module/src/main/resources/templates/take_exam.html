@@ -3,19 +3,75 @@
 <head>
     <meta charset="UTF-8">
     <title>Take Exam</title>
+    <link rel="stylesheet" href="/style.css">
+
+    <style>
+        /* ------- Clean Timer UI ------- */
+        .timer-box {
+            background: #2c3e50;
+            color: #fff;
+            padding: 12px 20px;
+            font-size: 20px;
+            border-radius: 6px;
+            width: max-content;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        /* Question Styling */
+        .question-box {
+            background: #ffffff;
+            padding: 18px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 16px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background: #2980b9;
+        }
+    </style>
 </head>
+
 <body>
+
+<!-- Exam Title -->
 <h2 th:text="${exam.title}"></h2>
 
-<form action="/exam/submit" method="post">
+<!-- Exam Duration -->
+<p><strong>Exam Duration:</strong> <span th:text="${exam.duration}"></span> minutes</p>
+
+<!-- ⏳ TIMER UI -->
+<div class="timer-box">
+    Time Left: <span id="timer"></span>
+</div>
+
+<!-- =============================
+            EXAM FORM
+============================= -->
+<form action="/exam/submit" method="post" id="examForm">
     <input type="hidden" name="examId" th:value="${exam.id}">
 
-    <div th:each="q, i : ${questions}">
-        <!-- Each question sends one questionId and one selectedOption -->
+    <div th:each="q, i : ${questions}" class="question-box">
+
+        <!-- Question ID -->
         <input type="hidden" name="questionId" th:value="${q.id}">
 
+        <!-- Question Text -->
         <h3 th:text="'Q' + ${i.index + 1} + '. ' + ${q.text}"></h3>
 
+        <!-- Options -->
         <ul>
             <li th:each="opt : ${q.options}">
                 <label>
@@ -26,16 +82,60 @@
                 </label>
             </li>
         </ul>
-        <hr>
     </div>
 
     <button type="submit">Submit Exam</button>
 </form>
 
+
+<!-- =============================
+        COUNTDOWN TIMER
+============================= -->
 <script>
-    // Before submit, collect selected answers into flat fields Spring can bind
-    document.querySelector("form").addEventListener("submit", function (e) {
+    // Duration from database
+    const durationMinutes = [[${exam.duration}]]; 
+    let timeLeft = durationMinutes * 60;
+
+    function formatTime(seconds) {
+        const mins = Math.floor(seconds / 60);
+        const secs = seconds % 60;
+        return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+    }
+
+    const timerElement = document.getElementById("timer");
+    timerElement.textContent = formatTime(timeLeft);
+
+    const countdown = setInterval(() => {
+        timeLeft--;
+        timerElement.textContent = formatTime(timeLeft);
+
+        if (timeLeft <= 0) {
+            clearInterval(countdown);
+
+            // Popup alert
+            alert("Time is over! Your exam will be submitted automatically.");
+
+            const form = document.getElementById("examForm");
+
+            // 🔥 FIX: Trigger full submit (NOT direct submit)
+            form.dispatchEvent(new Event('submit', {cancelable: true}));
+
+            // 🔥 Redirect after 0.5 sec
+            setTimeout(() => {
+                window.location.href = "/exam/list";  // CHANGE IF NEEDED
+            }, 500);
+        }
+    }, 1000);
+
+
+    // =============================
+    // Before submit → Gather answers
+    // =============================
+    document.getElementById("examForm").addEventListener("submit", function (e) {
+
+        // Collect selected answers
         const selectedInputs = document.querySelectorAll("input[type='radio']:checked");
+
         selectedInputs.forEach((input) => {
             const hidden = document.createElement("input");
             hidden.type = "hidden";
