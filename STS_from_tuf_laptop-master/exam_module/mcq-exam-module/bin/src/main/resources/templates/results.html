@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Your Exam Results</title>
+</head>
+<body>
+<h2>Your Previous Results</h2>
+
+<table border="1">
+    <tr>
+        <th>Exam ID</th>
+        <th>Total Questions</th>
+        <th>Correct Answers</th>
+        <th>Score</th>
+        <th>Submitted At</th>
+    </tr>
+<tr th:each="r : ${results}">
+    <td th:text="${r.examId}"></td>
+    <td th:text="${r.totalQuestions}"></td>
+    <td th:text="${r.correctAnswers}"></td>
+    <td th:text="${r.score}"></td>
+    <td th:text="${#temporals.format(r.submittedAt, 'yyyy-MM-dd HH:mm:ss')}"></td>
+</tr>
+</table>
+
+<a href="/exam/list">Back to Exams</a>
+</body>
+</html>

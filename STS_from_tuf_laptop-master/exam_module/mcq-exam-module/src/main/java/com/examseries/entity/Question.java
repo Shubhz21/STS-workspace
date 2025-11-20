@@ -47,4 +47,9 @@ public class Question {
 
     public String getCorrectOption() { return correctOption; }
     public void setCorrectOption(String correctOption) { this.correctOption = correctOption; }
+
+    public void setQuestionText(String questionText) {
+        this.text = questionText;
+    }
+
 }

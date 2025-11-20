@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Exam Result</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<h2>Exam Result</h2>
+
+<div class="result-box">
+    <p><strong>Total Questions:</strong> <span th:text="${result.totalQuestions}"></span></p>
+    <p><strong>Correct Answers:</strong> <span th:text="${result.correctAnswers}"></span></p>
+    <p><strong>Score:</strong> <span th:text="${result.score}"></span></p>
+</div>
+
+<a href="/exam/list">Back to Exams</a>
+</body>
+</html>
+
+
+
+
+

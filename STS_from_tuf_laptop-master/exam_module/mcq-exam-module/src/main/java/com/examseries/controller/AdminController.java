@@ -46,7 +46,7 @@ public class AdminController {
         for (ExamUploadDto.QuestionDto qDto : dto.getQuestions()) {
             Question question = new Question();
             question.setExam(savedExam);
-          //  question.setQuestionText(qDto.getQuestionText());
+            question.setQuestionText(qDto.getQuestionText());
             question.setCorrectOption(qDto.getCorrectOption());
 
             List<Option> options = new ArrayList<>();
