@@ -27,7 +27,7 @@
         <tbody>
             <tr th:each="exam : ${exams}">
                 <td th:text="${exam.title}"></td>
-                <td th:text="${exam.description}"></td>
+                <td th:text="${exam.subject}"></td>
                 <td th:text="${exam.duration}"></td>
                 <td><a th:href="@{'/exam/take/' + ${exam.id}}" class="start-btn">Start Exam</a></td>
             </tr>
