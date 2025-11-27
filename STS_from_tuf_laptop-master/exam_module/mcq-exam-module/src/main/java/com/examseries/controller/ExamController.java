@@ -3,6 +3,10 @@ package com.examseries.controller;
 import com.examseries.entity.*;
 import com.examseries.service.ExamService;
 import com.examseries.service.ResultService;
+
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -51,29 +55,46 @@ public class ExamController {
                              @RequestParam List<Long> questionId,
                              @RequestParam List<String> selectedOption,
                              HttpSession session,
-                             Model model) {
+                             HttpServletRequest request,
+                             HttpServletResponse response) {
 
         User user = (User) session.getAttribute("user");
         if (user == null) {
-            return "redirect:/login";
+            return "redirect:/";
         }
 
+        // --- SAVE USER ANSWERS ---
         List<UserAnswer> answers = new ArrayList<>();
+
         for (int i = 0; i < questionId.size(); i++) {
+
             UserAnswer ans = new UserAnswer();
             ans.setUserId(user.getId());
             ans.setExamId(examId);
             ans.setQuestionId(questionId.get(i));
+
+            // This will already contain "no answer" for unanswered questions
             ans.setSelectedOption(selectedOption.get(i));
+
             answers.add(ans);
         }
 
-        Result result = resultService.calculateAndSaveResult(user.getId(), examId, answers);
+        // --- SAVE RESULT ---
+        resultService.calculateAndSaveResult(user.getId(), examId, answers);
 
-        model.addAttribute("result", result);
-        model.addAttribute("exam", examService.getExamById(examId));
-        return "result";
+        // --- LOGOUT AFTER SAVE ---
+        session.invalidate();   // Destroy session
+
+        // Clear JSESSIONID cookie to ensure logout
+        Cookie cookie = new Cookie("JSESSIONID", null);
+        cookie.setMaxAge(0);
+        cookie.setPath("/");
+        response.addCookie(cookie);
+
+        // Redirect to login page after logout
+        return "redirect:/login?submitted=true";
     }
+
 
     // View Previous Results
     @GetMapping("/results")

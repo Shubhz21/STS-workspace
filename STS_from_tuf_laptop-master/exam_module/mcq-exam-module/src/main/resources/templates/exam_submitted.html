@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Exam Submitted</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .card {
+            background: white;
+            width: 450px;
+            padding: 30px;
+            text-align: center;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            opacity: 1; /* default */
+            transition: opacity 1s ease; /* fade-out animation */
+        }
+
+        .success-icon {
+            font-size: 60px;
+            color: #2ecc71;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 26px;
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        p {
+            font-size: 16px;
+            color: #555;
+            margin: 8px 0;
+        }
+
+        .btn {
+            display: inline-block;
+            margin-top: 25px;
+            padding: 12px 25px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: #2980b9;
+        }
+    </style>
+
+    <script>
+        // Auto fade + redirect after 5 seconds
+        window.onload = function () {
+
+            setTimeout(() => {
+                document.querySelector(".card").style.opacity = "0"; // fade out
+            }, 3000); // fade starts at 3 secs
+
+            setTimeout(() => {
+                window.location.href = "/"; // redirect to index/root
+            }, 5000); // redirect at 5 secs
+        };
+    </script>
+
+</head>
+<body>
+
+<div class="card">
+    <div class="success-icon">✔</div>
+
+    <h1>Exam Submitted Successfully</h1>
+
+    <p><strong th:text="${exam.title}"></strong></p>
+
+    <p>Your responses have been recorded.</p>
+
+    <p>
+        <strong>Submitted on:</strong>
+        <span th:text="${submittedTime}"></span>
+    </p>
+
+    <p style="margin-top: 20px; font-size: 14px; color: #777;">
+        Redirecting in 5 seconds...
+    </p>
+
+    <a href="/" class="btn">Go to Home Now</a>
+</div>
+
+</body>
+</html>

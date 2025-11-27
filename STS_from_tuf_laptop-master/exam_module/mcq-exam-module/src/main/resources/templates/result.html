@@ -1,24 +1,140 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Exam Result</title>
-    <link rel="stylesheet" href="/style.css">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+        }
+
+        header {
+            background: #2c3e50;
+            color: #fff;
+            padding: 18px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 26px;
+        }
+
+        nav a {
+            color: #fff;
+            margin-left: 18px;
+            text-decoration: none;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            color: #1abc9c;
+        }
+
+        .result-container {
+            width: 50%;
+            margin: 40px auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+            text-align: center;
+        }
+
+        .result-title {
+            font-size: 24px;
+            color: #2c3e50;
+            margin-bottom: 25px;
+        }
+
+        .result-box p {
+            font-size: 18px;
+            margin: 12px 0;
+        }
+
+        .result-label {
+            color: #34495e;
+            font-weight: bold;
+        }
+
+        .score-value {
+            font-size: 24px;
+            color: #27ae60;
+            font-weight: bold;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 25px;
+            background: #2c3e50;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .back-btn:hover {
+            background: #1a242f;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .result-container {
+                width: 90%;
+                padding: 20px;
+            }
+
+            .result-box p {
+                font-size: 16px;
+            }
+
+            .score-value {
+                font-size: 20px;
+            }
+        }
+    </style>
+
 </head>
 <body>
-<h2>Exam Result</h2>
 
-<div class="result-box">
-    <p><strong>Total Questions:</strong> <span th:text="${result.totalQuestions}"></span></p>
-    <p><strong>Correct Answers:</strong> <span th:text="${result.correctAnswers}"></span></p>
-    <p><strong>Score:</strong> <span th:text="${result.score}"></span></p>
+<header>
+    <h1>Exam Result</h1>
+    <nav>
+        <a href="/exam/list">Back to Exams</a>
+        <a href="/logout">Logout</a>
+    </nav>
+</header>
+
+<div class="result-container">
+    <div class="result-title">Your Performance Summary</div>
+
+    <div class="result-box">
+        <p>
+            <span class="result-label">Total Questions:</span>
+            <span th:text="${result.totalQuestions}"></span>
+        </p>
+
+        <p>
+            <span class="result-label">Correct Answers:</span>
+            <span th:text="${result.correctAnswers}"></span>
+        </p>
+
+        <p>
+            <span class="result-label">Score:</span>
+            <span class="score-value" th:text="${result.score}"></span>
+        </p>
+    </div>
+
+    <a href="/exam/list" class="back-btn">⬅ Back to Exam List</a>
 </div>
 
-<a href="/exam/list">Back to Exams</a>
 </body>
 </html>
-
-
-
-
-

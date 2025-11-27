@@ -3,148 +3,285 @@
 <head>
     <meta charset="UTF-8">
     <title>Take Exam</title>
-    <link rel="stylesheet" href="/style.css">
 
     <style>
-        /* ------- Clean Timer UI ------- */
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+        }
+
+        /* ===============================
+            FIXED HEADER BAR (TOP)
+        =============================== */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: #2c3e50;
+            color: white;
+            padding: 18px 30px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+            z-index: 1000;
+        }
+
+        header h1 {
+            margin: 12px;
+            font-size: 26px;
+        }
+
+        nav a {
+            color: #fff;
+            margin-left: 18px;
+            text-decoration: none;
+            transition: 0.3s;
+            font-size: 16px;
+        }
+
+        nav a:hover {
+            color: #1abc9c;
+        }
+
+        /* Spacer to push content below fixed header */
+        .header-space {
+            height: 1px;
+        }
+
+        /* ===============================
+            FIXED EXAM INFO + TIMER BAR
+        =============================== */
+        .exam-info-bar {
+            position: fixed;
+            top: 90px;
+            left: 0;
+            width: 100%;
+            background: #fff;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+            z-index: 999;
+        }
+
+        .exam-info-bar h2 {
+            margin: 0;
+            font-size: 20px;
+            color: #34495e;
+        }
+
+        .exam-info-bar p {
+            margin: 0;
+            font-size: 14px;
+            color: #555;
+        }
+
+        /* FIXED TIMER */
         .timer-box {
             background: #2c3e50;
-            color: #fff;
-            padding: 12px 20px;
-            font-size: 20px;
+            color: white;
+            padding: 10px 18px;
             border-radius: 6px;
-            width: max-content;
-            margin-bottom: 20px;
+            font-size: 18px;
             font-weight: bold;
         }
 
-        /* Question Styling */
+        /* Spacer to push questions below fixed bar */
+        .exam-info-space {
+            height: 0px;
+        }
+
+        /* ===============================
+               QUESTIONS SECTION
+        =============================== */
+        .container {
+            width: 85%;
+            margin: 20px auto;
+            margin-top: 220px; /* space for both fixed bars */
+        }
+
         .question-box {
-            background: #ffffff;
+            background: white;
             padding: 18px;
             border-radius: 8px;
             margin-bottom: 20px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
 
+        .question-box h3 {
+            margin-bottom: 12px;
+            color: #333;
+        }
+
+        ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        ul li {
+            margin: 10px 0;
+            background: #f7f9fc;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #e0e6ed;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        ul li:hover {
+            background: #eaf2fa;
+        }
+
+        label {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Submit Button */
         button {
-            padding: 12px 25px;
-            font-size: 16px;
+            padding: 14px 30px;
             background: #3498db;
             color: white;
             border: none;
             border-radius: 8px;
             cursor: pointer;
-            margin-top: 20px;
+            font-size: 17px;
+            display: block;
+            margin: 30px auto;
+            transition: 0.3s;
         }
 
         button:hover {
             background: #2980b9;
         }
     </style>
+
 </head>
 
 <body>
 
-<!-- Exam Title -->
-<h2 th:text="${exam.title}"></h2>
+<!-- FIXED HEADER -->
+<header>
+    <h1>Take Exam</h1>
+    <nav>
+        <a href="/exam/list">Back to Exams</a>
+        <a href="/logout">Logout</a>
+    </nav>
+</header>
 
-<!-- Exam Duration -->
-<p><strong>Exam Duration:</strong> <span th:text="${exam.duration}"></span> minutes</p>
+<div class="header-space"></div>
 
-<!-- ⏳ TIMER UI -->
-<div class="timer-box">
-    Time Left: <span id="timer"></span>
-</div>
-
-<!-- =============================
-            EXAM FORM
-============================= -->
-<form action="/exam/submit" method="post" id="examForm">
-    <input type="hidden" name="examId" th:value="${exam.id}">
-
-    <div th:each="q, i : ${questions}" class="question-box">
-
-        <!-- Question ID -->
-        <input type="hidden" name="questionId" th:value="${q.id}">
-
-        <!-- Question Text -->
-        <h3 th:text="'Q' + ${i.index + 1} + '. ' + ${q.text}"></h3>
-
-        <!-- Options -->
-        <ul>
-            <li th:each="opt : ${q.options}">
-                <label>
-                    <input type="radio"
-                           th:name="${'selectedOption_' + q.id}"
-                           th:value="${opt.optionText}" required>
-                    <span th:text="${opt.optionText}"></span>
-                </label>
-            </li>
-        </ul>
+<!-- FIXED TITLE + DURATION + TIMER ROW -->
+<div class="exam-info-bar">
+    <div>
+        <h2 th:text="${exam.title}"></h2>
+        <p><strong>Duration:</strong> <span th:text="${exam.duration}"></span> minutes</p>
     </div>
 
-    <button type="submit">Submit Exam</button>
-</form>
+    <div class="timer-box">
+        Time Left: <span id="timer"></span>
+    </div>
+</div>
 
+<div class="exam-info-space"></div>
 
-<!-- =============================
-        COUNTDOWN TIMER
-============================= -->
+<!-- MAIN EXAM CONTENT -->
+<div class="container">
+    <form action="/exam/submit" method="post" id="examForm">
+        <input type="hidden" name="examId" th:value="${exam.id}">
+
+        <div th:each="q, i : ${questions}" class="question-box">
+
+            <input type="hidden" name="questionId" th:value="${q.id}">
+
+            <h3 th:text="'Q' + ${i.index + 1} + '. ' + ${q.text}"></h3>
+
+            <ul>
+                <li th:each="opt : ${q.options}">
+                    <label>
+                        <input type="radio"
+                               th:name="${'selectedOption_' + q.id}"
+                               th:value="${opt.optionText}"
+                               required>
+                        <span th:text="${opt.optionText}"></span>
+                    </label>
+                </li>
+            </ul>
+
+        </div>
+
+        <button type="submit">Submit Exam</button>
+    </form>
+</div>
+
+<!-- TIMER SCRIPT -->
+<!-- TIMER SCRIPT -->
 <script>
-    // Duration from database
-    const durationMinutes = [[${exam.duration}]]; 
+    const durationMinutes = [[${exam.duration}]];
     let timeLeft = durationMinutes * 60;
 
-    function formatTime(seconds) {
-        const mins = Math.floor(seconds / 60);
-        const secs = seconds % 60;
-        return `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+    function formatTime(sec) {
+        const m = Math.floor(sec / 60);
+        const s = sec % 60;
+        return `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
     }
 
     const timerElement = document.getElementById("timer");
     timerElement.textContent = formatTime(timeLeft);
 
+    function syncSelectedOptions() {
+        document.querySelectorAll(".question-box").forEach((qBox) => {
+            const qId = qBox.querySelector("input[name^='selectedOption_']").name.split("_")[1];
+            const selectedInput = qBox.querySelector("input[type='radio']:checked");
+
+            let hidden = document.querySelector(`input[data-q="${qId}"]`);
+            if (!hidden) {
+                hidden = document.createElement("input");
+                hidden.type = "hidden";
+                hidden.name = "selectedOption";
+                hidden.dataset.q = qId;
+                document.getElementById("examForm").appendChild(hidden);
+            }
+
+            // If unanswered, send "no answer"
+            hidden.value = selectedInput ? selectedInput.value : "no answer";
+        });
+    }
+
+    function autoSubmitExam() {
+        syncSelectedOptions();
+
+        // Submit form via normal post (let Spring/Hibernate save answers)
+        document.getElementById("examForm").submit();
+        // Do NOT redirect immediately; server will handle logout after saving
+    }
+
     const countdown = setInterval(() => {
         timeLeft--;
         timerElement.textContent = formatTime(timeLeft);
 
-        if (timeLeft <= 0) {
+        if(timeLeft <= 0) {
             clearInterval(countdown);
-
-            // Popup alert
-            alert("Time is over! Your exam will be submitted automatically.");
-
-            const form = document.getElementById("examForm");
-
-            // 🔥 FIX: Trigger full submit (NOT direct submit)
-            form.dispatchEvent(new Event('submit', {cancelable: true}));
-
-            // 🔥 Redirect after 0.5 sec
-            setTimeout(() => {
-                window.location.href = "/exam/list";  // CHANGE IF NEEDED
-            }, 500);
+            autoSubmitExam();
         }
     }, 1000);
 
-
-    // =============================
-    // Before submit → Gather answers
-    // =============================
-    document.getElementById("examForm").addEventListener("submit", function (e) {
-
-        // Collect selected answers
-        const selectedInputs = document.querySelectorAll("input[type='radio']:checked");
-
-        selectedInputs.forEach((input) => {
-            const hidden = document.createElement("input");
-            hidden.type = "hidden";
-            hidden.name = "selectedOption";
-            hidden.value = input.value;
-            e.target.appendChild(hidden);
-        });
+    // Sync before manual submit
+    document.getElementById("examForm").addEventListener("submit", function() {
+        syncSelectedOptions();
     });
 </script>
+
+
+
+
+
 
 </body>
 </html>

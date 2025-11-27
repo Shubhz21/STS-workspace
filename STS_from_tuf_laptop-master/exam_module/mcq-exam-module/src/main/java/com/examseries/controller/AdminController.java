@@ -5,6 +5,8 @@ import com.examseries.entity.Exam;
 import com.examseries.entity.Option;
 import com.examseries.entity.Question;
 import com.examseries.service.ExamService;
+import com.examseries.service.QuestionService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +19,9 @@ import java.util.List;
 @RequestMapping("/admin")
 public class AdminController {
 
+	@Autowired
+	private QuestionService questionService;
+	
     @Autowired
     private ExamService examService;
 
@@ -70,4 +75,19 @@ public class AdminController {
         examService.deleteExam(id);
         return "redirect:/admin/dashboard";
     }
+    
+    @GetMapping("/exam/{examId}/questions")
+    public String viewQuestions(@PathVariable Long examId, Model model) {
+
+        Exam exam = examService.getExamById(examId);
+        List<Question> questions = questionService.getQuestionsByExamId(examId);
+
+        model.addAttribute("exam", exam);
+        model.addAttribute("questions", questions);
+
+        return "exam_questions";
+    }
+
+
+    
 }

@@ -1,14 +1,37 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Admin Dashboard</title>
     <link rel="stylesheet" href="/style.css">
     <style>
-    table{ 
-    text-align: center; 
-    
-    }
+        table{
+            text-align: center;
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td{
+        
+            padding: 10px;
+            border: 1px solid #444;
+        }
+        .btn-view{
+            background: #3498db;
+            padding: 6px 12px;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+        .btn-view:hover{
+            background: #217dbb;
+        }
+        .delete-btn{
+            background: #e74c3c;
+            padding: 6px 12px;
+            color: white;
+            border-radius: 5px;
+            text-decoration: none;
+        }
     </style>
 </head>
 <body>
@@ -22,21 +45,34 @@
 
 <section>
     <h2>All Exams</h2>
+
     <table>
         <thead>
             <tr>
-                <th>Exam_Title&nbsp;</th>
-                <th>Subject&nbsp;</th>
-                <th>Duration(mins)&nbsp;</th>
+                <th>Exam_Title</th>
+                <th>Subject</th>
+                <th>Duration(mins)</th>
+                <th>View Questions</th>
                 <th>Action</th>
             </tr>
         </thead>
+
         <tbody>
-            <tr th:each="exam : ${exams}">&nbsp;
+            <tr th:each="exam : ${exams}">
                 <td th:text="${exam.title}"></td>
                 <td th:text="${exam.subject}"></td>
                 <td th:text="${exam.duration}"></td>
-                <td><a th:href="@{'/admin/delete/' + ${exam.id}}" class="delete-btn">Delete</a></td>
+
+                <!-- New Button -->
+                <td>
+                    <a th:href="@{'/admin/exam/' + ${exam.id} + '/questions'}" class="btn-view">
+                        Show Questions
+                    </a>
+                </td>
+
+                <td>
+                    <a th:href="@{'/admin/delete/' + ${exam.id}}" class="delete-btn">Delete</a>
+                </td>
             </tr>
         </tbody>
     </table>
