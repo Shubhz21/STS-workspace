@@ -3,46 +3,144 @@
 <head>
     <meta charset="UTF-8">
     <title>Upload Exam</title>
-    <link rel="stylesheet" href="/style.css">
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f2f5;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 60%;
+            margin: 30px auto;
+            background: #ffffff;
+            padding: 25px 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+
+        h2 {
+            text-align: center;
+            color: #4a148c;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-top: 12px;
+            color: #333;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 6px;
+            border: 1px solid #bbb;
+            font-size: 15px;
+        }
+
+        input:focus {
+            border-color: #6a1b9a;
+            outline: none;
+            box-shadow: 0 0 5px rgba(106, 27, 154, 0.5);
+        }
+
+        .question-box {
+            background: #f8f3ff;
+            padding: 15px;
+            border-left: 5px solid #6a1b9a;
+            margin-top: 20px;
+            border-radius: 8px;
+        }
+
+        hr {
+            border: 0;
+            border-top: 1px solid #ddd;
+            margin-top: 15px;
+        }
+
+        button {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        .add-btn {
+            background-color: #6a1b9a;
+            color: white;
+            margin-right: 10px;
+        }
+
+        .submit-btn {
+            background-color: #4a148c;
+            color: white;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+    </style>
+
     <script>
         function addQuestion() {
             const container = document.getElementById('questions');
             const questionIndex = container.children.length;
+
             const div = document.createElement('div');
+            div.classList.add("question-box");
+
             div.innerHTML = `
                 <h3>Question ${questionIndex + 1}</h3>
+
                 <label>Question Text:</label>
                 <input type="text" name="questions[${questionIndex}].questionText" required>
 
-                <label>Options:</label><br>
-                <input type="text" name="questions[${questionIndex}].options[0]" placeholder="Option 1" required><br>
-                <input type="text" name="questions[${questionIndex}].options[1]" placeholder="Option 2" required><br>
-                <input type="text" name="questions[${questionIndex}].options[2]" placeholder="Option 3" required><br>
-                <input type="text" name="questions[${questionIndex}].options[3]" placeholder="Option 4" required><br>
-                <label>Correct Option:</label>
-                <input type="text" name="questions[${questionIndex}].correctOption" required><br>
+                <label>Options:</label>
+                <input type="text" name="questions[${questionIndex}].options[0]" placeholder="Option 1" required>
+                <input type="text" name="questions[${questionIndex}].options[1]" placeholder="Option 2" required>
+                <input type="text" name="questions[${questionIndex}].options[2]" placeholder="Option 3" required>
+                <input type="text" name="questions[${questionIndex}].options[3]" placeholder="Option 4" required>
+
+                <label>Correct Option (1-4):</label>
+                <input type="number" name="questions[${questionIndex}].correctOption" required>
+
                 <hr>
             `;
+
             container.appendChild(div);
         }
     </script>
 </head>
+
 <body>
-<h2>Upload New Exam</h2>
+<div class="container">
+    <h2>Upload New Exam</h2>
 
-<form action="/admin/upload-exam" method="post">
-    <label>Exam Title:</label>
-    <input type="text" name="title" required><br>
+    <form action="/admin/upload-exam" method="post">
 
-    <label>Subject:</label>
-    <input type="text" name="subject" required><br>
+        <label>Exam Title:</label>
+        <input type="text" name="title" required>
 
-    <label>Duration (minutes):</label>
-    <input type="number" name="duration" required><br>
+        <label>Subject:</label>
+        <input type="text" name="subject" required>
 
-    <div id="questions"></div>
-    <button type="button" onclick="addQuestion()">Add Question</button>
-    <button type="submit">Submit Exam</button>
-</form>
+        <label>Duration (minutes):</label>
+        <input type="number" name="duration" required>
+
+        <div id="questions"></div>
+
+        <button type="button" class="add-btn" onclick="addQuestion()">+ Add Question</button>
+        <button type="submit" class="submit-btn">Submit Exam</button>
+    </form>
+</div>
 </body>
 </html>
